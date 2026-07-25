@@ -10,7 +10,7 @@ const razorpay = new Razorpay({
 
 //placing user order from frontend
 const placeOrder = async (req, res) => {
-  const frontend_url = "http://localhost:5173";
+  const frontend_url = "http://localhost:5174";   //take care of this where(on which port) our frontend is running
 
   try {
     const newOrder = new orderModel({
@@ -73,6 +73,41 @@ const verifyOrder = async (req, res) => {
   }
 };
 
+//user orders for frontend
+const userOrders = async(req,res) => {
+  try {
+    const orders = await orderModel.find({userId:req.body.userId})
+    res.json({success:true, data:orders})
+  } catch (error) {
+    console.log(error);
+    res.json({success:false,message:"Error"})
+  }
+}
+
+//listing orders for admin
+const listOrders = async (req,res) => {
+  try {
+    const orders = await orderModel.find({});
+    res.json({success:true,data:orders})
+  } catch (error) {
+    console.log(error);
+    res.json({success:false,message:"Error"})
+    
+  }
+}
+
+//api for updating the order status
+const updateStatus = async (req,res) => {
+  try {
+    await orderModel.findByIdAndUpdate(req.body.orderId,{status:req.body.status})
+    res.json({success:true,message:"Status updated"})
+  } catch (error) {
+    console.log(error);
+    res.json({success:false,message:"Error"})
+    
+  }
+}
 
 
-export { placeOrder,verifyOrder };
+
+export { placeOrder,verifyOrder,userOrders,listOrders,updateStatus };
