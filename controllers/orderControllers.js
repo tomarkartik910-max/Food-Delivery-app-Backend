@@ -10,7 +10,7 @@ const razorpay = new Razorpay({
 
 //placing user order from frontend
 const placeOrder = async (req, res) => {
-  const frontend_url = "https://food-delivery-app-omega-steel.vercel.app/";   //take care of this where(on which port) our frontend is running
+  const frontend_url = "http://localhost:5174";   //take care of this where(on which port) our frontend is running
 
   try {
     const newOrder = new orderModel({
